@@ -10,6 +10,7 @@ class Session(commands.Cog):
         self.session_buyins = {}
         self.session_message = None
         self.database_file = 'blackjack_data.json'
+        self.session_house = ''
 
     def load_data(self):
         try:
@@ -36,16 +37,18 @@ class Session(commands.Cog):
         await self.session_message.edit(embed=embed)
 
     @commands.command()
-    async def startsession(self, ctx):
+    async def startsession(self, ctx, house: str):
         if self.active_session:
             await ctx.send("A session is already active.")
         else:
             self.active_session = True
             self.session_earnings = {}
             self.session_buyins = {}
+            self.session_house = house
 
             embed = discord.Embed(title="Blackjack Session Info", color=discord.Color.blue())
             embed.add_field(name="Status", value="Ongoing", inline=False)
+            embed.add_field(name="House", value=f"{self.session_house}", inline=False)
 
             self.session_message = await ctx.send(embed=embed)
             await ctx.send("New Blackjack session started!")
@@ -89,6 +92,7 @@ class Session(commands.Cog):
         data = self.load_data()
 
         embed = discord.Embed(title="Blackjack Session Results", color=discord.Color.green())
+        embed.add_field(name="House", value=f"{self.session_house}", inline=False)
         for username in self.session_buyins:
             buyin_amount = self.session_buyins[username]
             earnings = self.session_earnings.get(username, 0)
@@ -104,7 +108,9 @@ class Session(commands.Cog):
         self.save_data(data)
         self.session_earnings = {}
         self.session_buyins = {}
+        self.session_house = ''
         self.active_session = False
+
         await ctx.send(embed=embed)
         await ctx.send("Session ended and lifetime earnings updated.")
 
