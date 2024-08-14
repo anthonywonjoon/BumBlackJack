@@ -1,20 +1,4 @@
 {
     "users": {
-        "test_user": {
-            "username": "Test",
-            "lifetime_earnings": 9999
-        },
-        "anthony": {
-            "username": "anthony",
-            "lifetime_earnings": 480
-        },
-        "alex": {
-            "username": "alex",
-            "lifetime_earnings": -50
-        },
-        "nick": {
-            "username": "nick",
-            "lifetime_earnings": 0
-        }
     }
 }
