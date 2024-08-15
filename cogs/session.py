@@ -38,6 +38,8 @@ class Session(commands.Cog):
 
     @commands.command()
     async def startsession(self, ctx, house: str):
+        await ctx.message.delete()
+
         if self.active_session:
             await ctx.send("A session is already active.")
         else:
@@ -58,6 +60,8 @@ class Session(commands.Cog):
         if not self.active_session:
             await ctx.send("No active session. Start a session first.")
             return
+        
+        await ctx.message.delete()
     
         data = self.load_data()
         if data["users"].get(username) == None:
@@ -76,6 +80,8 @@ class Session(commands.Cog):
             await ctx.send("No active session. Start a session first")
             return
         
+        await ctx.message.delete()
+        
         if username not in self.session_earnings:
             self.session_earnings[username] = 0
         
@@ -90,6 +96,8 @@ class Session(commands.Cog):
             return
         
         data = self.load_data()
+
+        await ctx.message.delete()
 
         embed = discord.Embed(title="Blackjack Session Results", color=discord.Color.green())
         embed.add_field(name="House", value=f"{self.session_house}", inline=False)

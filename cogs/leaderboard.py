@@ -18,6 +18,8 @@ class Leaderboard(commands.Cog):
     async def leaderboard(self, ctx):
         data = self.load_data()
 
+        await ctx.message.delete()
+
         leaderboard = sorted(data['users'].items(), key=lambda x: x[1]['lifetime_earnings'], reverse=True)
         
         embed = discord.Embed(title="🏆 Bunch of Bums Leaderboard 🏆", color=discord.Color.gold())

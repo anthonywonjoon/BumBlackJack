@@ -21,6 +21,8 @@ class Users(commands.Cog):
     async def adduser(self, ctx, username: str):
         data = self.load_data()
 
+        await ctx.message.delete()
+
         if username in data['users']:
             await ctx.send(f"User {username} is already in the database.")
         else:
@@ -34,6 +36,8 @@ class Users(commands.Cog):
     @commands.command()
     async def removeuser(self, ctx, username: str):
         data = self.load_data()
+
+        await ctx.message.delete()
 
         if username in data['users']:
             del data['users'][username]
